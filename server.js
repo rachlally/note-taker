@@ -3,8 +3,9 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const fs = require("fs");
-const { get } = require("http");
 const PORT = process.env.PORT || 3000;
+const uuid = require("uuid");
+console.log(uuid.v4())
 
 app.use(express.static("public"))
 
@@ -36,16 +37,19 @@ app.get('/api/notes',(req,res)=>{
 })
 
 app.post('/api/notes',(req,res)=>{
-    fs.readFile('./db/db.json','utf-8',(err,data)=>{
+    fs.readFile("./db/db.json", "utf-8", (err, data)=>{
         if(err){
             console.log(err);
             res.status(500).json({
-                msg:"Whoops!",
-                err:err
-            })
+                msg: "Whoops!",
+                err: err,
+            });
         } else {
+
             const dataArr = JSON.parse(data);
+            req.body.id = uuid.v4();
             dataArr.push(req.body);
+
             fs.writeFile('./db/db.json',JSON.stringify(dataArr,null,4),(err,data)=>{
                 if(err){
                     console.log(err);
@@ -56,11 +60,57 @@ app.post('/api/notes',(req,res)=>{
                 } else {
                     res.json({
                         msg:"Successfully Added!"
-                    })
+                    });
                 }
-            })
+            });
         }
-    })
+    });
+});
+
+// app.get("/api/notes/:id", (req,res)=>{
+//     console.log("The notes!")
+// })
+
+app.delete("/api/notes/:id", (req, res)=>{
+    const deletion = req.params.id;
+    fs.readFile("./db/db.json", "utf-8", (err, data)=>{
+        if(err){
+            console.log(err);
+            res.status(500).json({
+                msg: "Whoops!",
+                err: err,
+            });
+        } else {
+
+            const dataArr = JSON.parse(data);
+            let index = -1;
+            for (let i = 0; i < dataArr.length; i++){
+                if (dataArr[i].id === deletion){
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index !== -1){
+                dataArr.splice(index, 1)
+            }
+
+            fs.writeFile('./db/db.json',JSON.stringify(dataArr,null,4),(err,data)=>{
+                if(err){
+                    console.log(err);
+                    res.status(500).json({
+                        msg:"Whoops!",
+                        err:err
+                    })
+                } else {
+                    res.json({
+                        msg:"Successfully Added!"
+                    });
+                }
+            });
+        }
+    });
+
 })
 
 app.get('*',(req,res)=>{
