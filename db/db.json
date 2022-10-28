@@ -4,7 +4,13 @@
         "text": "Test text"
     },
     {
-        "title": "Wed",
-        "text": "take out trash"
+        "title": "Friday",
+        "text": "Interview Donny\nCall Spencer about utilities",
+        "id": "ecf35d08-461d-4edd-b86c-f76373fcd1d9"
+    },
+    {
+        "title": "Employee Codes",
+        "text": "Dax: 55\nEmily: 23\nRandy: 10",
+        "id": "e3b9f47f-2006-41fb-b8db-3da8353791eb"
     }
 ]
