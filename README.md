@@ -7,6 +7,10 @@ Business owners lead busy and demanding lives.  They have so many things to keep
 
 Creating the Note Taker was my first introduction into backend development.  I learned how to create routes in order to get, post, and delete stored data.  I learned how to use Insomnia to assist with writing and testing these routes.  I learned how to push applications to Heroku and deploy my site. 
 
+## Technology
+
+This application was created with an Express.js back end.  Deployed with Heroku.
+
 ## Usage
 
 The Note Taker application is viewable and usable at: https://note-taker-lally.herokuapp.com
